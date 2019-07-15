@@ -15,7 +15,7 @@ public class ParkingLotManager {
 
     public ParkingTicket park(ParkingBoy parkingBoy, Car car) { //经理要停车男孩去停车
         if (parkingBoys.contains(parkingBoy)) {  //如果停车男孩已经存在了
-            return parkingBoy.park(car);  //如果男孩存在，那么就可以让男孩进行停车
+            return parkingBoy.park(car);  //如果男孩存在，那么就可以让男孩进行停车，返回车票或者异常
         } else {
             throw new IllegalStateException("No boy is working.");  //这个男孩不在这个经理的管辖范围之内，则返回这个男孩没有在这里工作
         }
