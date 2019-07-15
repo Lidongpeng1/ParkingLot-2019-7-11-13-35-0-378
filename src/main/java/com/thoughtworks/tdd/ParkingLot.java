@@ -4,57 +4,50 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ParkingLot {
+    private Map<ParkingTicket, Car> cars = new HashMap<>();
+    private int capacity = 10;
 
-    private Map<Ticket,Car> parkingCarTicket = new HashMap();
-    private int parkingCapacity;//实时容量
-    private int capacity;//容量，不变值
+    public ParkingLot() {}
 
     public ParkingLot(int capacity) {
         this.capacity = capacity;
-        this.parkingCapacity = capacity;
+    }
+
+    public ParkingTicket park(Car car) {
+        if (cars.size() >= capacity) {
+            throw new IllegalStateException("Not enough position.");
+        }
+        if (car == null) {
+            throw new NullPointerException();
+        }
+        if (cars.containsValue(car)) {
+            throw new IllegalArgumentException("Can not passing a parked car.");
+        }
+        ParkingTicket parkingTicket = new ParkingTicket();
+        cars.put(parkingTicket, car);
+        return parkingTicket;
+    }
+
+    public Car fetchCar(ParkingTicket ticket) {
+        if (ticket == null) {
+            throw new IllegalArgumentException("Please provide your parking ticket.");
+        }
+        Car car = cars.remove(ticket);
+        if (car == null) {
+            throw new IllegalArgumentException("Unrecognized parking ticket.");
+        }
+        return car;
     }
 
     public int getCapacity() {
         return capacity;
     }
 
-    public Map<Ticket, Car> getParkingCarTicket() {
-        return parkingCarTicket;
+    public void setCapacity(int capacity) {
+        this.capacity = capacity;
     }
 
-    public int getParkingCapacity() {
-        return parkingCapacity;
-    }
-
-    public Ticket park(Car car) throws NoPositionException{
-        if(parkingCapacity<=0){
-            throw new NoPositionException("No enough position.");
-        }else{
-            Ticket ticket = new Ticket();
-            parkingCarTicket.put(ticket,car);
-            parkingCapacity-=1;
-            return ticket;
-        }
-    }
-
-    public Car fetch(Ticket ticket) throws WrongTicketException , UsedTicketException , NullTicketException{
-        if (ticket!=null) {
-            if (parkingCarTicket.containsKey(ticket)) {
-                if (parkingCarTicket.get(ticket) != null) {
-                    Car car = parkingCarTicket.get(ticket);
-                    parkingCarTicket.put(ticket, null);
-                    parkingCapacity+=1;
-                    return car;
-                } else {
-                    throw new UsedTicketException("Used parking ticket.");
-                }
-            } else {
-                throw new WrongTicketException("Wrong parking ticket.");
-            }
-        }else{
-            throw new NullTicketException("Please provide your parking ticket.");
-        }
-
-
+    public int availablePositionsCount() {
+        return capacity - cars.size();
     }
 }

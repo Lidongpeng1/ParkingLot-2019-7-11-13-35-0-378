@@ -1,64 +1,58 @@
 package com.thoughtworks.tdd;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Objects;
 
 public class ParkingBoy {
-    private List<ParkingLot> parkingLots;
+    private List<ParkingLot> parkingLots = new ArrayList<>();
+
+    public ParkingBoy() {}
+
+    public ParkingBoy(ParkingLot parkingLot) {
+        assignParkingLot(parkingLot);
+    }
 
     public ParkingBoy(List<ParkingLot> parkingLots) {
         this.parkingLots = parkingLots;
     }
 
-
-    public Ticket smartParking(Car car) throws NoPositionException{
-        List<Integer> list = parkingLots.stream().map(x->x.getParkingCapacity()).collect(Collectors.toList());
-        int max = Collections.max(list);
-        for(ParkingLot parkingLot:parkingLots){
-            if(parkingLot.getParkingCapacity() == max){
-                Ticket ticket = parkingLot.park(car);
-                return ticket;
+    public ParkingTicket park(Car car) {
+        RuntimeException exception = null;
+        for (ParkingLot parkingLot : parkingLots) {
+            try {
+                return parkingLot.park(car);
+            } catch (IllegalStateException e) {
+                exception = e;
             }
         }
-        throw new NoPositionException("No enough position.");
-    }
-    public Ticket parking(Car car) throws NoPositionException{
-        for (ParkingLot parkingLot : parkingLots){
-            if (parkingLot.getParkingCapacity()>0){
-                Ticket ticket = parkingLot.park(car);
-                return ticket ;
-            }
+        if (exception != null) {
+            throw exception;
         }
-        throw new NoPositionException("No enough position.");
+        return null;
     }
 
-    public Ticket superSmartParking(Car car) throws NoPositionException{
-     List<Integer> list = parkingLots.stream().map(x->x.getParkingCapacity()/x.getCapacity()).collect(Collectors.toList());
-        int max = Collections.max(list);
-        for(ParkingLot parkingLot:parkingLots){
-            if(parkingLot.getParkingCapacity() == max){
-                Ticket ticket = parkingLot.park(car);
-                return ticket;
+    public Car fetchCar(ParkingTicket ticket) {
+        RuntimeException exception = null;
+        for (ParkingLot parkingLot : parkingLots) {
+            try {
+                return parkingLot.fetchCar(ticket);
+            } catch (IllegalArgumentException e) {
+                exception = e;
             }
         }
-        throw new NoPositionException("No enough position.");
-
+        if (exception != null) {
+            throw exception;
+        }
+        return null;
     }
 
-    public Car fetching(Ticket ticket) throws WrongTicketException , UsedTicketException , NullTicketException{
-        if(ticket != null){
-            for(ParkingLot parkingLot:parkingLots){
-                if(parkingLot.getParkingCarTicket().containsKey(ticket)){
-                    Car car = parkingLot.fetch(ticket);
-                    return  car;
-                }
-            }
-            throw new WrongTicketException("Wrong parking ticket.");
-        }else{
-            throw new NullTicketException("Please provide your parking ticket.");
-        }
+    public void assignParkingLot(ParkingLot parkingLot) {
+        Objects.requireNonNull(parkingLot);
+        this.parkingLots.add(parkingLot);
+    }
+
+    protected List<ParkingLot> getParkingLots() {
+        return parkingLots;
     }
 }
