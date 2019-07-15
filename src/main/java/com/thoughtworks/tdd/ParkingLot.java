@@ -1,3 +1,5 @@
+package com.thoughtworks.tdd;
+
 import java.util.HashMap;
 import java.util.Map;
 
