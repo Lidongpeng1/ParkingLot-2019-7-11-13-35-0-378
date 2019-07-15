@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class ParkingBoy {
-    private List<ParkingLot> parkingLots = new ArrayList<>();
+    private List<ParkingLot> parkingLots = new ArrayList<>();//一个停车男孩可以到多个停车场停车
 
     public ParkingBoy() {}
 

@@ -29,10 +29,10 @@ public class ParkingLot {
     }
 
     public Car fetchCar(ParkingTicket ticket) { //取车方法
-        if (ticket == null) { //如果车票为空
+        if (ticket == null) { //如果停车票为空
             throw new IllegalArgumentException("Please provide your parking ticket.");
         }
-        Car car = cars.remove(ticket);//Map集合的remove方法，返回值为car
+        Car car = cars.remove(ticket);//Map集合的remove方法，返回值为对应的car对象
         if (car == null) {
             throw new IllegalArgumentException("Unrecognized parking ticket.");
         }
@@ -49,5 +49,5 @@ public class ParkingLot {
 
     public int availablePositionsCount() {
         return capacity - cars.size();
-    }
+    }//提供求可用停车位的方法
 }
