@@ -19,7 +19,7 @@ public class SmartParkingBoy extends ParkingBoy {
         for (ParkingLot parkingLot : getParkingLots()) {
             if (maxCapacityParkingLot == null ||
                 parkingLot.availablePositionsCount() > maxCapacityParkingLot.availablePositionsCount()) {
-                maxCapacityParkingLot = parkingLot; //遍历所有停车场获取最大容量停车场，并赋给selectedParkingLot
+                maxCapacityParkingLot = parkingLot; //遍历所有停车场获取最大容量停车场，并赋给maxCapacityParkingLot
             }
         }
         return maxCapacityParkingLot == null ? null : maxCapacityParkingLot.park(car);//三目运算符，停车场为空则返回空，否则调用选出的停车场调用park获取停车票作为返回值

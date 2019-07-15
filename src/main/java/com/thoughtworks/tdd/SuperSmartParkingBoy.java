@@ -15,16 +15,16 @@ public class SuperSmartParkingBoy extends SmartParkingBoy {
 
     @Override
     public ParkingTicket park(Car car) {
-        ParkingLot selectedParkingLot = null;
+        ParkingLot MaxcapacityParkingLot = null;
         double bestRate = 0;
         for (ParkingLot parkingLot : getParkingLots()) {
             double rate = parkingLot.availablePositionsCount() / parkingLot.getCapacity();
-            if (selectedParkingLot == null ||
+            if (MaxcapacityParkingLot == null ||
                 rate > bestRate) {
-                selectedParkingLot = parkingLot;
+                MaxcapacityParkingLot = parkingLot;
                 bestRate = rate;
             }
         }
-        return selectedParkingLot == null ? null : selectedParkingLot.park(car);
+        return MaxcapacityParkingLot == null ? null : MaxcapacityParkingLot.park(car);
     }
 }
