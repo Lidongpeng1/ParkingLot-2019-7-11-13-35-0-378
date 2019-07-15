@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ParkingLot {
-    private Map<ParkingTicket, Car> cars = new HashMap<>();
+    private Map<ParkingTicket, Car> cars = new HashMap<>();//使用map来存储车和停车票
     private int capacity = 10;
 
     public ParkingLot() {}
