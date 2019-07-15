@@ -15,7 +15,7 @@ public class ParkingLot {
 
     public ParkingTicket park(Car car) {
         if (cars.size() >= capacity) {
-            throw new IllegalStateException("Not enough position.");
+            throw new IllegalStateException("Not enough position.");//停车场位置已满
         }
         if (car == null) { //如果当前传入的var是空的，则输出空指针异常
             throw new NullPointerException();
@@ -30,11 +30,11 @@ public class ParkingLot {
 
     public Car fetchCar(ParkingTicket ticket) { //取车方法
         if (ticket == null) { //如果停车票为空
-            throw new IllegalArgumentException("Please provide your parking ticket.");
+            throw new IllegalArgumentException("Please provide your parking ticket.");//请提供你的车票
         }
         Car car = cars.remove(ticket);//Map集合的remove方法，返回值为对应的car对象
         if (car == null) {
-            throw new IllegalArgumentException("Unrecognized parking ticket.");
+            throw new IllegalArgumentException("Unrecognized parking ticket.");//remove失败返回空，则说明车票无效，返回无法识别的车票
         }
         return car;
     }
