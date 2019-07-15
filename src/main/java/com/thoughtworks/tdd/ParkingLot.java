@@ -28,11 +28,11 @@ public class ParkingLot {
         return parkingTicket; //返回当前的Ticket对象，也就是当前的停车票
     }
 
-    public Car fetchCar(ParkingTicket ticket) {
-        if (ticket == null) {
+    public Car fetchCar(ParkingTicket ticket) { //取车方法
+        if (ticket == null) { //如果车票为空
             throw new IllegalArgumentException("Please provide your parking ticket.");
         }
-        Car car = cars.remove(ticket);
+        Car car = cars.remove(ticket);//Map集合的remove方法，返回值为car
         if (car == null) {
             throw new IllegalArgumentException("Unrecognized parking ticket.");
         }
