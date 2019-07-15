@@ -32,7 +32,7 @@ public class ParkingBoy {
         return null;
     }
 
-    public Car fetchCar(ParkingTicket ticket) {
+    public Car fetchCar(ParkingTicket ticket) { //凭停车票获取相应的汽车
         RuntimeException exception = null;
         for (ParkingLot parkingLot : parkingLots) {
             try {
